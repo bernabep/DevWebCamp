@@ -64,12 +64,12 @@ class AuthController {
         $usuario = new Usuario;
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $usuario->sincronizar($_POST);
-            
+                       
             $alertas = $usuario->validar_cuenta();
 
             if(empty($alertas)) {
+                // debuguear($usuario);
                 $existeUsuario = Usuario::where('email', $usuario->email);
 
                 if($existeUsuario) {
@@ -90,6 +90,7 @@ class AuthController {
 
                     // Enviar email
                     $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    
                     $email->enviarConfirmacion();
                     
 

@@ -2,7 +2,11 @@
     <h2 class="auth__heading"><?php echo $titulo; ?></h2>
     <p class="auth__texto">Registrate en DevWebCamp</p>
 
-    <form class="formulario">
+    <?php 
+    require_once __DIR__ . '/../templates/alertas.php';
+    ?>
+
+    <form class="formulario" method="POST" action="/registro">
         <div class="formulario__campo">
             <label class="formulario__label" for="nombre">Nombre</label>
             <input
@@ -10,7 +14,9 @@
                 class="formulario__input"
                 name="nombre"
                 id="nombre"
-                placeholder="Tu Nombre">
+                placeholder="Tu Nombre"
+                value="<?php echo $usuario->nombre;?>"
+                >
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="apellido">Apellido</label>
@@ -19,7 +25,9 @@
                 class="formulario__input"
                 name="apellido"
                 id="apellido"
-                placeholder="Tu Apellido">
+                placeholder="Tu Apellido"
+                value="<?php echo $usuario->apellido;?>"
+                >
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="email">Email</label>
@@ -28,7 +36,9 @@
                 class="formulario__input"
                 name="email"
                 id="email"
-                placeholder="Tu Email">
+                placeholder="Tu Email"
+                value="<?php echo $usuario->email;?>"
+                >
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="password">Password</label>
@@ -42,7 +52,7 @@
         <div class="formulario__campo">
             <label class="formulario__label" for="password2">Repetir Password</label>
             <input
-                type="password2"
+                type="password"
                 class="formulario__input"
                 name="password2"
                 id="password2"
