@@ -10,8 +10,5 @@
                 <input type="submit" value="Cerrar Sesión" class="dashboard__submit--logout">
             </form>
         </nav>
-
-
-
     </div>
 </header>
