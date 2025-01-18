@@ -10,9 +10,10 @@ class PonentesController
 {
     public static function index(Router $router)
     {
-
+        $ponentes = Ponente::all();
         $router->render('/admin/ponentes/index', [
-            'titulo' => 'Ponentes / Conferencistas'
+            'titulo' => 'Ponentes / Conferencistas',
+            'ponentes' => $ponentes
         ]);
     }
 
