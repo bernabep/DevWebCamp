@@ -48,6 +48,20 @@
             id="imagen"
             name="imagen">
     </div>
+
+    <?php
+    if(isset($ponente->imagen_actual)){ ?>    
+        <p class="formulario__texto">Imagen Actual</p>
+        <div class="formulario__imagen">
+            <picture>
+                <source src="<?php echo $_ENV['HOST'] . '/img/speakers/' . $ponente->imagen_actual; ?>.webp" type="image/webp">
+                <source src="<?php echo $_ENV['HOST'] . '/img/speakers/' . $ponente->imagen_actual; ?>.png" type="image/png">
+                <img src="<?php echo $_ENV['HOST'] . '/img/speakers/' . $ponente->imagen_actual; ?>.webp" alt="Imagen Ponente">
+            </picture>
+
+        </div>
+
+    <?php } ?>
 </fieldset>
 
 <fieldset class="formulario__fieldset">
