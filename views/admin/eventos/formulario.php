@@ -7,7 +7,7 @@
             id="nombre"
             name="nombre"
             placeholder="Nombre Evento"
-            value="<?php echo $ponente->nombre ?? '' ?>">
+            value="<?php echo $evento->nombre ?? '' ?>">
     </div>
     <div class="formulario__campo">
         <label for="descripcion">Descripción</label>
@@ -33,15 +33,14 @@
     <div class="formulario__campo">
         <label for="descripcion">Seleccionar el día</label>
         <div class="formulario__radio">
-            <?php foreach($dias as $dia){?>
+            <?php foreach ($dias as $dia) { ?>
                 <div>
 
-                    <label for="<?php echo strtolower($dia->nombre);?>"><?php echo $dia->nombre;?></label>
+                    <label for="<?php echo strtolower($dia->nombre); ?>"><?php echo $dia->nombre; ?></label>
                     <input type="radio"
-                    id="<?php echo strtolower($dia->nombre);?>"
-                    name="id"
-                    value="<?php echo $dia->id;?>"
-                    >
+                        id="<?php echo strtolower($dia->nombre); ?>"
+                        name="id"
+                        value="<?php echo $dia->id; ?>">
                 </div>
             <?php }; ?>
         </div>
@@ -49,11 +48,31 @@
     <div class="formulario__campo">
         <label for="" class="formulario__label">Seleccionar Hora</label>
         <ul class="horas">
-            <?php foreach($horas as $hora){?>
-                <li class="horas__hora"><?php echo $hora->hora;?></li>
+            <?php foreach ($horas as $hora) { ?>
+                <li class="horas__hora"><?php echo $hora->hora; ?></li>
             <?php }; ?>
         </ul>
     </div>
 
+</fieldset>
+<fieldset class="formulario__fieldset">
+    <legend class="formulario__legend">Información Extra</legend>
+    <div class="formulario__campo">
+        <label for="ponentes">Ponente</label>
+        <input type="text"
+            class="formulario__input"
+            id="ponentes"
+            placeholder="Buscar Ponente"
+            value="<?php echo $ponente->nombre ?? '' ?>">
+    </div>
+    <div class="formulario__campo">
+        <label for="ponentes">Lugares Disponibles</label>
+        <input type="number"
+                min="1"
+            class="formulario__input"
+            id="disponibles"
+            name="disponibles"
+            placeholder="Ej. 20"
+            value="<?php echo $ponente->nombre ?? '' ?>">
     </div>
 </fieldset>

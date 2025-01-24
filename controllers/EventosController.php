@@ -6,6 +6,7 @@ namespace Controllers;
 use Model\Dia;
 use Model\Hora;
 use MVC\Router;
+use Model\Evento;
 use Model\Categoria;
 
 class EventosController
@@ -23,13 +24,22 @@ class EventosController
         $categorias = Categoria::all();    
         $dias = Dia::all('ASC');
         $horas = Hora::all('ASC');
+        $evento = new Evento;
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            $evento->sincronizar($_POST);
+            $alertas = $evento->validar();
+            
+
+        }
                 
         $router->render('admin/eventos/crear',[
             'alertas' => $alertas,
             'titulo' => 'Registrar Evento',
             'categorias' => $categorias,
             'dias' => $dias,
-            'horas' => $horas
+            'horas' => $horas,
+            'evento' => $evento
         ]);
     }
 }
