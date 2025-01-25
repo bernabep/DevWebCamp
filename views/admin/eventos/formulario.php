@@ -16,8 +16,7 @@
             id="descripcion"
             name="descripcion"
             placeholder="Descripciçon Evento"
-            rows="8"
-            ><?php echo $evento->descripcion ?? '' ?>
+            rows="8"><?php echo $evento->descripcion ?? '' ?>
         </textarea>
     </div>
     <div class="formulario__campo">
@@ -27,7 +26,7 @@
             name="categoria_id">
             <option value="">- Seleccionar -</option>
             <?php foreach ($categorias as $categoria) { ?>
-                <option <?php echo ($evento->categoria_id === $categoria->id) ? 'selected ' : '';?>value="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?></option>
+                <option <?php echo ($evento->categoria_id === $categoria->id) ? 'selected ' : ''; ?>value="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?></option>
             <?php } ?>
         </select>
     </div>
@@ -40,15 +39,16 @@
                     <label for="<?php echo strtolower($dia->nombre); ?>"><?php echo $dia->nombre; ?></label>
                     <input type="radio"
                         id="<?php echo strtolower($dia->nombre); ?>"
-                        name="id"
+                        name="dia"
                         value="<?php echo $dia->id; ?>">
                 </div>
             <?php }; ?>
         </div>
+        <input type="hidden" name="dia_id" value="">
     </div>
     <div class="formulario__campo">
         <label for="" class="formulario__label">Seleccionar Hora</label>
-        <ul class="horas">
+        <ul id="horas" class="horas">
             <?php foreach ($horas as $hora) { ?>
                 <li class="horas__hora"><?php echo $hora->hora; ?></li>
             <?php }; ?>
@@ -63,13 +63,12 @@
         <input type="text"
             class="formulario__input"
             id="ponentes"
-            placeholder="Buscar Ponente"
-            >
+            placeholder="Buscar Ponente">
     </div>
     <div class="formulario__campo">
         <label for="ponentes">Lugares Disponibles</label>
         <input type="number"
-                min="1"
+            min="1"
             class="formulario__input"
             id="disponibles"
             name="disponibles"
