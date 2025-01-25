@@ -11,6 +11,7 @@ if(horas){
     const categoria = document.querySelector('#categoria');
     const dias = document.querySelectorAll('[name="dia"]');
     const inputHiddenDia = document.querySelector('[name="dia_id"]');
+    const inputHiddenHora = document.querySelector('[name="hora_id"]');
     
     categoria.addEventListener('change',terminoBusqueda)
     
@@ -33,11 +34,24 @@ if(horas){
         const eventos = await resultado.json();
         console.log(eventos);
 
-        obtenerHorasDisponibles(){
-
-        }
+        obtenerHorasDisponibles();
 
         function obtenerHorasDisponibles(){
+            const horasDisponibles = document.querySelectorAll('#horas li')
+            horasDisponibles.forEach(hora=> hora.addEventListener('click',seleccionarHora))
+        }
+
+        function seleccionarHora(e){
+            //Deshabilitar la hora previa, si hay un nuevo click
+            const horaPrevia = document.querySelector('.horas__hora--seleccionada')
+            if(horaPrevia){
+                horaPrevia.classList.remove('horas__hora--seleccionada');
+            }
+
+            //Agregar clase de seleccionado
+            e.target.classList.add('horas__hora--seleccionada')
+
+            inputHiddenHora.value = e.target.dataset.horaId;
             
         }
     }

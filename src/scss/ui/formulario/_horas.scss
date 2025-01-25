@@ -17,7 +17,12 @@
         text-align: center;
         &:hover{
             cursor: pointer;
-            background-color: color.adjust(v.$azul, $lightness: 50%);
+            // background-color: color.adjust(v.$azul, $lightness: 50%);
+        }
+        &--seleccionada{
+            @extend .horas__hora;
+            background-color: v.$azul;
+            color: v.$blanco;
         }
     }
 }
