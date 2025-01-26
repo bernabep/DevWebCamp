@@ -1,0 +1,34 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+@use "sass:color";
+
+.listado-ponentes{
+    @include m.reset-lista;
+    @include m.grid(1,1rem);
+    // @include m.tablet{
+    //     @include m.grid(3,1rem);
+    // }
+
+    &__ponente{
+        color: v.$azul;
+        border: 1px solid v.$azul;
+        padding: 1rem;
+        border-radius: 1rem;
+        text-align: center;
+        &:hover{
+            cursor: pointer;
+            // background-color: color.adjust(v.$azul, $lightness: 50%);
+            // background-color: v.$azul;
+        }
+
+        &--seleccionado{
+            @extend .listado-ponentes__ponente;
+                background-color: v.$azul;
+                color: v.$blanco;
+            }
+        
+        }
+    &__no-resultado{
+
+    }
+}

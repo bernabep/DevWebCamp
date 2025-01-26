@@ -18,6 +18,7 @@
         &:hover{
             cursor: pointer;
             // background-color: color.adjust(v.$azul, $lightness: 50%);
+            // background-color: v.$azul;
         }
         &--seleccionada{
             @extend .horas__hora;
