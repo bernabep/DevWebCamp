@@ -13,11 +13,14 @@ if(ponentesInput){
     if(ponenteHidden.value){
         (async() =>{
             const ponente = await obtenerPonente(ponenteHidden.value)
-            console.log(ponente)
+            const {nombre,apellido} = ponente
 
             // Insertar en el HTML
-            const ponenteDom
-            // hasta aqui
+            const ponenteDom = document.createElement('LI');
+            ponenteDom.classList.add('listado-ponentes__ponente', 'listado-ponentes__ponente--seleccionado');
+            ponenteDom.textContent = `${nombre} ${apellido}`;
+            listadoPonentes.appendChild(ponenteDom);
+
     })()
     }
 
@@ -99,7 +102,6 @@ if(ponentesInput){
         }
 
         ponente.classList.add('listado-ponentes__ponente--seleccionado')
-
         ponenteHidden.value = ponente.dataset.ponenteId;
     }
 

@@ -14,6 +14,9 @@ class EventosController
 {
     public static function index(Router $router)
     {
+        if(!is_admin()){
+            header('Location: /login');
+        }
         $total = Evento::total();
         if ($total > 0) {
             $pagina_actual = $_GET['page'];
@@ -31,8 +34,7 @@ class EventosController
             $evento->dia = Dia::find($evento->dia_id); 
             $evento->ponente = Ponente::find($evento->ponente_id); 
         }
-        // debuguear($evento);
-        
+
         $router->render('/admin/eventos/index', [
             'titulo' => 'Conferencias y Workshops',
             'eventos' => $eventos,
@@ -42,6 +44,9 @@ class EventosController
 
     public static function crear(Router $router)
     {
+        if(!is_admin()){
+            header('Location: /login');
+        }
         $alertas = [];
         $categorias = Categoria::all();
         $dias = Dia::all('ASC');
@@ -49,6 +54,9 @@ class EventosController
         $evento = new Evento;
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if(!is_admin()){
+                header('Location: /login');
+            }
             $evento->sincronizar($_POST);
             $alertas = $evento->validar();
             if (empty($alertas)) {
@@ -72,6 +80,9 @@ class EventosController
 
     public static function editar(Router $router)
     {
+        if(!is_admin()){
+            header('Location: /login');
+        }
         $alertas = [];
         $id = $_GET['id'];
         $id = filter_var($id,FILTER_VALIDATE_INT);
@@ -84,12 +95,16 @@ class EventosController
         $dias = Dia::all('ASC');
         $horas = Hora::all('ASC');
         $evento = Evento::find($id);
+        
 
         if(!$evento){
             header('Location: /admin/eventos');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if(!is_admin()){
+                header('Location: /login');
+            }
             $evento->sincronizar($_POST);
             $alertas = $evento->validar();
             if (empty($alertas)) {
@@ -100,7 +115,8 @@ class EventosController
                 }
             }
         }
-
+        // debuguear($dias);
+        // debuguear($evento);
         $router->render('admin/eventos/editar', [
             'alertas' => $alertas,
             'titulo' => 'Editar Evento',
@@ -109,5 +125,28 @@ class EventosController
             'horas' => $horas,
             'evento' => $evento
         ]);
+    }
+
+    public static function eliminar(Router $router)
+    {
+        $alertas = [];
+        $evento = new Evento;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if(!is_admin()){
+                header('Location: /login');
+            }
+            $id = $_POST['id'];
+            $evento = Evento::find($id);
+
+            if(!isset($evento)){
+                header('Location: /admin/evento');
+            }
+
+            $resultado = $evento->eliminar();
+            if ($resultado){
+                header('Location: /admin/eventos');
+            }
+        }
     }
 }
