@@ -10,6 +10,25 @@ if(ponentesInput){
     obtenerPonentes();
     ponentesInput.addEventListener('input',buscarPonentes )
 
+    if(ponenteHidden.value){
+        (async() =>{
+            const ponente = await obtenerPonente(ponenteHidden.value)
+            console.log(ponente)
+
+            // Insertar en el HTML
+            const ponenteDom
+            // hasta aqui
+    })()
+    }
+
+    async function obtenerPonente(id) {
+        const url = `/api/ponente?id=${id}`
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+        return resultado
+        
+    }
+
     async function obtenerPonentes() {
         const url = `/api/ponentes`
         const respuesta = await fetch(url);
