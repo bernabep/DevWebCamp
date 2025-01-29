@@ -10,6 +10,7 @@ use Controllers\EventosController;
 use Controllers\RegalosController;
 use Controllers\PonentesController;
 use Controllers\DashboardController;
+use Controllers\PaginasController;
 use Controllers\RegistradosController;
 
 $router = new Router();
@@ -59,5 +60,10 @@ $router->get('/api/eventos-horario',[APIEventos::class,'index']);
 $router->get('/api/ponentes',[APIPonentes::class,'index']);
 $router->get('/api/ponente',[APIPonentes::class,'ponente']);
 
+///Area Publica
+$router->get('/',[PaginasController::class,'index']);
+$router->get('/devwebcamp',[PaginasController::class,'evento']);
+$router->get('/paquetes',[PaginasController::class,'paquetes']);
+$router->get('/workshops-conferencias',[PaginasController::class,'conferencias']);
 
 $router->comprobarRutas();
