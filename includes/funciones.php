@@ -12,16 +12,24 @@ function s($html) : string {
 }
 
 function pagina_actual($path):bool{
-    return str_contains($_SERVER['PATH_INFO'],$path) ? true : false;
+    if(isset($_SERVER['PATH_INFO'])){
+        return str_contains($_SERVER['PATH_INFO'],$path) ? true : false;
+    }else{
+        return false;
+    }
 }
 
 function is_auth():bool {
-    session_start();
+    if(!isset($_SESSION)){
+        session_start();
+    }
     return isset($_SESSION['nombre']) && !empty($_SESSION);
 }
 
 function is_admin():bool{
-    session_start();
+    if(!isset($_SESSION)){
+        session_start();
+    }
     return isset($_SESSION['admin']) && !empty($_SESSION['admin']) ;
 
 }

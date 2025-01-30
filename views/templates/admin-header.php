@@ -1,6 +1,6 @@
 <header class="dashboard__header">
     <div class="dashboard__header-grid">
-        <a href="/">
+        <a href="/devwebcamp">
             <h2 class="dashboard__logo">
                 &ltDevWebCamp/>
             </h2>

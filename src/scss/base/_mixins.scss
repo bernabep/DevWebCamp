@@ -95,6 +95,7 @@ margin: 2rem 0;
     color: v.$blanco;
     margin-bottom: 2rem;
     text-align: center;
+    white-space: nowrap;
     @include desktop{
         text-align: left;
         margin: 0;
