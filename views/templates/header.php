@@ -13,7 +13,7 @@
             <?php } ?>
         </nav>
         <div class="header__contenido">
-            <a href="/devwebcamp">
+            <a href="/">
                 <h1 class="header__logo">
                     &ltDevWebCamp/>
                 </h1>

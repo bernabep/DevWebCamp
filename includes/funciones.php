@@ -12,11 +12,8 @@ function s($html) : string {
 }
 
 function pagina_actual($path):bool{
-    if(isset($_SERVER['PATH_INFO'])){
-        return str_contains($_SERVER['PATH_INFO'],$path) ? true : false;
-    }else{
-        return false;
-    }
+    return str_contains($_SERVER['PATH_INFO'] ?? '/',$path) ? true : false;
+    
 }
 
 function is_auth():bool {
