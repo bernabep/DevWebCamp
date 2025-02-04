@@ -55,7 +55,10 @@
 
 .speaker-sociales {
   @include m.menu-social(v.$negro, 3rem);
-  display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
+  &{
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+
+  }
 }

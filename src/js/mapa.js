@@ -14,7 +14,7 @@ if (document.querySelector("#mapa")) {
     .addTo(map)
     .bindPopup(`
         <h2 class="mapa__heading">DevWebCamp</h2>
-        <p class="mapa__texto">Centro de Convernciones de Sevilla</p>
+        <p class="mapa__texto">Centro de Convenciones de Sevilla</p>
         `)
     .openPopup();
 }
