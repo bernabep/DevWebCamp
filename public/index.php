@@ -7,10 +7,11 @@ use Controllers\APIEventos;
 use Controllers\APIPonentes;
 use Controllers\AuthController;
 use Controllers\EventosController;
+use Controllers\PaginasController;
 use Controllers\RegalosController;
 use Controllers\PonentesController;
+use Controllers\RegistroController;
 use Controllers\DashboardController;
-use Controllers\PaginasController;
 use Controllers\RegistradosController;
 
 $router = new Router();
@@ -59,6 +60,9 @@ $router->get('/admin/regalos', [RegalosController::class, 'index']);
 $router->get('/api/eventos-horario',[APIEventos::class,'index']);
 $router->get('/api/ponentes',[APIPonentes::class,'index']);
 $router->get('/api/ponente',[APIPonentes::class,'ponente']);
+
+//Registro de Usuarios
+$router->get('/finalizar-registro',[RegistroController::class,'crear']);
 
 ///Area Publica
 $router->get('/',[PaginasController::class,'index']);
