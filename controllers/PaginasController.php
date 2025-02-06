@@ -104,4 +104,5 @@ class PaginasController
             'titulo' => 'Pagina no encontrada'
         ]);
     }
+
 }
