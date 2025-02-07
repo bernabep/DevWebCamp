@@ -65,8 +65,10 @@ $router->get('/api/ponente',[APIPonentes::class,'ponente']);
 $router->get('/finalizar-registro',[RegistroController::class,'crear']);
 $router->post('/finalizar-registro/gratis',[RegistroController::class,'gratis']);
 
+
 // Boleto virual
 $router->get('/boleto',[RegistroController::class,'boleto']);
+$router->get('/boleto/pago',[PaginasController::class,'pago']);
 
 ///Area Publica
 $router->get('/',[PaginasController::class,'index']);
@@ -74,5 +76,6 @@ $router->get('/devwebcamp',[PaginasController::class,'evento']);
 $router->get('/paquetes',[PaginasController::class,'paquetes']);
 $router->get('/workshops-conferencias',[PaginasController::class,'conferencias']);
 $router->get('/404',[PaginasController::class,'error']);
+
 
 $router->comprobarRutas();

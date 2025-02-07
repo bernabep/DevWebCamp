@@ -24,6 +24,8 @@
                 <li class="paquete__elemento">Comida y Bebida</li>
             </ul>
             <p class="paquete__precio">€199</p>
+            <div id="paypal-container-C4FN7AHVC5BWC"></div>
+            
         </div>
         <div class="paquete">
             <h3 class="paquete__nombre">Pase Virtual</h3>
@@ -38,3 +40,11 @@
     </div>
 
 </main>
+
+<script src="https://www.paypal.com/sdk/js?client-id=BAA7jGyFkAu5lS92GC8MYWrtbVo1nSjZXDCFAvg4L2y4Jyt8Ho-JhQgFG6KBmqY2rWWntgNtHy6slcc1dw&components=hosted-buttons&disable-funding=venmo&currency=EUR"></script>
+
+<script>
+  paypal.HostedButtons({
+    hostedButtonId: "C4FN7AHVC5BWC",
+  }).render("#paypal-container-C4FN7AHVC5BWC")
+</script>
