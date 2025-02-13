@@ -12,6 +12,8 @@ use Model\Ponente;
 use Model\Usuario;
 use Model\Registro;
 use Model\Categoria;
+use Model\EventosRegistros;
+use Model\Eventos_registros;
 
 class RegistroController
 {
@@ -26,6 +28,10 @@ class RegistroController
         $registro = Registro::where('usuario_id', $_SESSION['id']);
         if (isset($registro) && $registro->paquete_id === "3") {
             header('Location: /boleto?id=' . urlencode($registro->token));
+        }
+
+        if($registro->paquete_id==="1"){
+            header('Location: /finalizar-registro/conferencias');
         }
 
 
@@ -48,12 +54,12 @@ class RegistroController
             $token = substr(md5(uniqid(rand(), true)), 0, 8);
 
             // Crear registro
-            $datos = array(
+            $datos = [
                 'paquete_id' => 3,
                 'pago_id' => '',
                 'token' => $token,
                 'usuario_id' => $_SESSION['id']
-            );
+            ];
             $registro = new Registro($datos);
             $resultado = $registro->guardar();
             if ($resultado) {
@@ -138,6 +144,11 @@ class RegistroController
             header('Location: /');
         }
 
+        // Redireccionar a boleto virtual en caso de haber finalizado su registro
+        if(isset($registro->regalo_id)){
+            header('Location: /boleto?id=' . urlencode($registro->token));
+        }
+
         $eventos = Evento::ordenar('hora_id', 'ASC');
         $eventos_formateados = [];
         foreach ($eventos as $evento) {
@@ -182,16 +193,45 @@ class RegistroController
                 return;
             }
             
+            $eventos_array = [];
             // Validar la disponibilidad de los elementos seleccionados
             foreach($eventos as $evento_id){
                 $evento = Evento::find($evento_id);
-
 
                 if(!isset($evento) || $evento->disponibles === "0"){
                     echo json_encode(['resultado'=>false]);
                     return;
                 }
+                $eventos_array[] = $evento;
             }
+
+            
+            foreach($eventos_array as $evento){                
+                $evento->disponibles -=1;
+                $evento->guardar();
+
+                // Almacenar el registro
+                $datos = [
+                    'evento_id' => (int) $evento->id,
+                    'registro_id' => (int) $registro->id
+                ];
+                
+                $registro_usuario = new EventosRegistros($datos);
+                $registro_usuario->guardar();
+                }
+
+                $registro->sincronizar(['regalo_id' => $_POST['regalo_id']]);
+                $resultado = $registro->guardar();
+                if($resultado){
+                    echo json_encode([
+                            'resultado' => $resultado,
+                            'token' => $registro->token
+                            ]
+                    );
+                } else {
+                    echo json_encode(['resultado'=>false]);
+                }
+                return;
 
 
         }
