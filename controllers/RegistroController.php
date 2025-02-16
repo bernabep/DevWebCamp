@@ -26,12 +26,14 @@ class RegistroController
         //Verificar si el usuario ya está registrado
 
         $registro = Registro::where('usuario_id', $_SESSION['id']);
-        if (isset($registro) && $registro->paquete_id === "3") {
+        if (isset($registro) && ($registro->paquete_id === "3" || $registro->paquete_id==="2")) {
             header('Location: /boleto?id=' . urlencode($registro->token));
+            return;
         }
 
-        if($registro->paquete_id==="1"){
+        if(isset($registro->paquete_id) && $registro->paquete_id==="1"){
             header('Location: /finalizar-registro/conferencias');
+            return;
         }
 
 
@@ -45,10 +47,12 @@ class RegistroController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!is_auth()) {
                 header('Location: /login');
+                return;
             }
             $registro = Registro::where('usuario_id', $_SESSION['id']);
             if (isset($registro) && $registro->paquete_id === "3") {
                 header('Location: /boleto?id=' . urlencode($registro->token));
+                return;
             }
 
             $token = substr(md5(uniqid(rand(), true)), 0, 8);
@@ -64,6 +68,7 @@ class RegistroController
             $resultado = $registro->guardar();
             if ($resultado) {
                 header('Location: /boleto?id=' . urlencode($registro->token));
+                return;
             }
         }
     }
@@ -72,6 +77,7 @@ class RegistroController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!is_auth()) {
                 header('Location: /login');
+                return;
             }
 
             // Validar que POST no venga vacio
@@ -82,7 +88,6 @@ class RegistroController
 
             // Crear Registro
             
-               
             $datos = $_POST;
             $datos['token'] = substr(md5(uniqid(rand(), true)), 0, 8);;
             $datos['usuario_id'] = $_SESSION['id'];
@@ -90,9 +95,8 @@ class RegistroController
             try {
                 $registro = new Registro($datos);    
                 $resultado = $registro->guardar();
-                echo json_encode([
-                    'resultado'=>$resultado
-                ]);
+                echo json_encode(['resultado'=>$resultado]);
+                return;
             } catch (\Throwable $th) {
                 echo json_encode([
                     'resultado'=>'error'
@@ -105,24 +109,24 @@ class RegistroController
         // Validar la URL
         if (!isset($_GET['id'])) {
             header('Location: /');
+            return;
         }
         $id = $_GET['id'];
         if (!$id || strlen($id) !== 8) {
             header('Location: /');
+            return;
         }
 
         // Buscarlo en la BD
         $registro = Registro::where('token', $id);
         if (!$registro) {
             header('Location: /');
+            return;
         }
 
         // Llenar las tablas de referencia
         $registro->usuario = Usuario::find($registro->usuario_id);
         $registro->paquete = Paquete::find($registro->paquete_id);
-
-
-
 
 
         $router->render('/registro/boleto', [
@@ -134,19 +138,27 @@ class RegistroController
     public static function conferencias(Router $router){
         if(!is_auth()){
             header('Location: /login');
+            return;
         }
 
         // Validar que el usuario tenga el plan presencial
         $usuario_id = $_SESSION['id'];
         $registro = Registro::where('usuario_id',$usuario_id);
+
+        if(isset($registro) && $registro->paquete_id === "2"){
+            header('Location: /boleto?id=' . urlencode($registro->token));
+            return;
+        }
         
         if($registro->paquete_id !== "1") {
             header('Location: /');
+            return;
         }
 
         // Redireccionar a boleto virtual en caso de haber finalizado su registro
-        if(isset($registro->regalo_id)){
+        if(isset($registro->regalo_id) && $registro->paquete_id === "1"){
             header('Location: /boleto?id=' . urlencode($registro->token));
+            return;
         }
 
         $eventos = Evento::ordenar('hora_id', 'ASC');
@@ -178,6 +190,7 @@ class RegistroController
 
             if(!is_auth()){
                 header('Location: /login');
+                return;
             }
 
             $eventos = explode(',',$_POST['eventos']);

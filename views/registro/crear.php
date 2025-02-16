@@ -30,6 +30,7 @@
                 </div>
             </div>
 
+
         </div>
         <div class="paquete">
             <h3 class="paquete__nombre">Pase Virtual</h3>
@@ -40,6 +41,11 @@
                 <li class="paquete__elemento">Acceso a las grabaciones</li>
             </ul>
             <p class="paquete__precio">€49</p>
+            <div id="smart-button-container">
+                <div style="text-align: center;">
+                    <div id="paypal-button-container-virtual"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -84,8 +90,8 @@
                         })
                         .then(respuesta => respuesta.json())
                         .then(resultado => {
-                            if(resultado.resultado){
-                                actions.redirect(`${process.env.HOST}/finalizar-registro/conferencias`);
+                            if (resultado.resultado) {
+                                actions.redirect('http://localhost:4000/finalizar-registro/conferencias');
                             }
                         })
                     // Full available details
@@ -98,6 +104,61 @@
                 console.log(err);
             }
         }).render('#paypal-button-container');
+
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'blue',
+                layout: 'vertical',
+                label: 'pay',
+            },
+
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        "description": "2",
+                        "amount": {
+                            "currency_code": "USD",
+                            "value": 49
+                        }
+                    }]
+                });
+            },
+
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    const datos = new FormData();
+                    datos.append('paquete_id', orderData.purchase_units[0].description);
+                    datos.append('pago_id', orderData.purchase_units[0].payments.captures[0].id);
+
+
+                    fetch('finalizar-registro/pagar', {
+                            method: 'POST',
+                            body: datos
+                        })
+                        .then(respuesta => respuesta.json())
+                        .then(resultado => {
+                            
+                            if (resultado.resultado) {
+
+                                actions.redirect('http://localhost:4000/finalizar-registro/conferencias');
+                            } else {
+                                console.log('Error en la redirección');
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Error en la llamada fetch:', error);
+                        });
+
+                    // Full available details
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                });
+            },
+
+            onError: function(err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container-virtual');
     }
 
     initPayPalButton();

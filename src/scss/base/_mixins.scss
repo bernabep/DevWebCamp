@@ -189,3 +189,8 @@ margin: 2rem 0;
     border: 1px solid color.adjust( v.$gris, $lightness: 10% );
     padding: 3rem;
 }
+
+@mixin bg-gradient($bg_color){
+    background-image: linear-gradient(to left top, $bg_color, color.adjust($bg_color, $lightness: 18%));
+
+}

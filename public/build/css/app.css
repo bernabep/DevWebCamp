@@ -978,7 +978,7 @@ h3 {
   font-weight: 700;
   margin-bottom: 1rem;
 }
-+ .registro__select {
+.registro__select {
   width: 100%;
   background-color: #FFFFFF;
   border: 1px solid #64748B;
@@ -1670,5 +1670,51 @@ h3 {
 .listado-ponentes__ponente--seleccionado {
   background-color: #007df4;
   color: #FFFFFF;
+}
+.bloques {
+  width: min(95%, 140rem);
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .bloques {
+    margin-top: 10rem;
+  }
+}
+.bloques__grid {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: repeat(1, 1fr);
+}
+@media (min-width: 1024px) {
+  .bloques__grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.bloque {
+  padding: 2rem;
+  color: #FFFFFF;
+  border-radius: 1rem;
+}
+.bloque:nth-child(1) {
+  background-image: linear-gradient(to left top, #F97316, rgb(251.3046025105, 168.7740585774, 111.4953974895));
+}
+.bloque:nth-child(2) {
+  background-image: linear-gradient(to left top, #A855F7, rgb(212.8685393258, 172.6741573034, 251.1258426966));
+}
+.bloque__heading {
+  margin: 1rem 0 2rem 0;
+  font-size: 3.6rem;
+}
+.bloque__texto {
+  margin: 1rem 0;
+}
+.bloque__texto--cantidad {
+  margin-top: 5rem;
+  font-weight: 900;
+  font-size: 6rem;
+  text-align: center;
 }
 /*# sourceMappingURL=app.css.map */
